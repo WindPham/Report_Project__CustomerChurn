@@ -1,0 +1,21 @@
+Project: Predict Customer churn on a dataset.
+PREPROCESSING DATA:
+	1. SELECTION DATA:
+	2. CLEANING DATA:
+		a. All methods of handling missing data:
+			a.1. Continuious data:
+				+ Remove the missing records;
+				+ mean-methods
+				+ median-methods:
+				+ mode-methods:
+			a.2. Categorical data:
+				+ fixed value:
+				+ mode-methods:
+				+ 
+		b. Normalization Data:
+			b.1. interval [0,1]: Ban đầu chưa chuẩn hóa các thuộc tính số nguyên và số thực thì khi chạy mô hình trên tập validation là 98~99%
+			Đến khi chuẩn hóa các thuộc tính ở trên thì ta thấy rằng mô hình được train lại thì lại đạt độ chính xác là 100%.
+			Thực sự khi mà train xong lúc chưa chuẩn hóa về [0,1], em thực sự khá bất ngờ với kết quả là 98~99%, em vẫn chưa tin là kết quả có thể cao như vậy. 
+			Chắc có lẻ bản thân dữ liệu không chứa nhiễu, nhưng em không chắc điều này.
+			
+			b.2. 
