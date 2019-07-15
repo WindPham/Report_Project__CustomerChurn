@@ -1,4 +1,4 @@
-Project: Predict Customer churn on a dataset.
+﻿Project: Predict Customer churn on a dataset.
 PREPROCESSING DATA:
 	1. SELECTION DATA:
 	2. CLEANING DATA:
@@ -19,3 +19,8 @@ PREPROCESSING DATA:
 			Chắc có lẻ bản thân dữ liệu không chứa nhiễu, nhưng em không chắc điều này.
 			
 			b.2. z-scores (theo phân phối chuẩn): Đã train thử và thấy score đạt 100%
+		c. outlier detection:
+			c.1. Bằng z-scores: Nắm rõ thuật toán và tìm ra được tập record bị outlier, nhưng chưa xóa được tập records này trong dataframe.
+			c.2. bằng DSCAN: Hiểu được thuật toán nhưng chưa code kịp.
+	3. CỐ GẮNG XÂY DỰNG MỘT THƯ VIỆN CON ĐỂ TÁI SỬ DỤNG. (code bằng visual studio, gặp lỗi file exe nên chưa úp lên kịp)
+	4. TẬP RECORD: khi đem train thì độ đúng đắn chỉ đạt 78-82%. 
