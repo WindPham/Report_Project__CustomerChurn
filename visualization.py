@@ -63,7 +63,7 @@ class PLOT(object):
 
 
 if __name__ == "__main__":
-    df = Intro.PLOT("WA_Fn-UseC_-Telco-Customer-Churn-standard.csv");
+    df = PLOT("WA_Fn-UseC_-Telco-Customer-Churn-standard.csv");
     #df.plt_line_two_columns("tenure", "TotalCharges");
     #df.plt_points_two_column("tenure", "TotalCharges");
     #df.plt_points_two_column("tenure", "MonthlyCharges");
