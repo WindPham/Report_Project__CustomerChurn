@@ -11,7 +11,6 @@ PREPROCESSING DATA:
 			a.2. Categorical data:
 				+ fixed value:
 				+ mode-methods:
-				+ 
 		b. Normalization Data:
 			b.1. max-min [0,1]: Ban đầu chưa chuẩn hóa các thuộc tính số nguyên và số thực thì khi chạy mô hình trên tập validation là 98~99%
 			Đến khi chuẩn hóa các thuộc tính ở trên thì ta thấy rằng mô hình được train lại thì lại đạt độ chính xác là 100%.
@@ -37,6 +36,12 @@ PREPROCESSING DATA:
 			a.9. Biểu đồ dạng 
 			a.10. Biểu đồ dạng 
 			a.11. Biểu đồ dạng 
+	4. PHẦN RỜI RẠC HÓA DỮ LIỆU LIÊN TỤC:
+		a. Rời rạc hóa bằng cây quyết định giữa một cột cần chuyển dựa trên cột đã gắn nhãn: code xong.
+		b. Rời rạc hóa bằng cây quyết định trên cả tập dữ liệu: code xong
+		c. Rời rạc bằng phương pháp "Rừng ngẫu nhiên": hiểu sơ lược thuật toán nhưng chưa code kịp
+	5. PHẦN CHIA DỮ LIỆU TRƯỚC VÀ SAU KHI HUẤN LUYỆN:
+		a. Chia trước khi tiền xử lý:
+		b. Xử lý độc lập trên các tập khác nhau trên cùng các bước xử lý dữ liệu.
 
-	4. HUẤN LUYỆN VÀ KIỂM THỬ
-		Huấn luyện hơn 300 model để tìm kiếm model có kết quả cao nhất đạt (81.14% trên tập validation).
+	
