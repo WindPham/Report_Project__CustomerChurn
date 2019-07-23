@@ -1,6 +1,12 @@
 ﻿Project: Predict Customer churn on a dataset.
 PREPROCESSING DATA:
-	1. SELECTION DATA:
+	1. DATA INTEGRATION:
+		a. Kết hợp hai dataset lại thành một data set lớn hơn:
+			a.1. Phát hiện vấn đề nhận dạng thực thể: Phần này thường là dò bằng tay hoặc bán thủ công. (đã tìm được cách bán thử công nhưng chưa code kịp).
+			a.2. Phát hiện record trùng lặp (code rồi phần này).
+			a.3. Phát hiện vấn đề bị sai về số chiều của các data set với nhau: (đang code)
+			a.4. Thống nhất giữa hai data set về số chiều: (đang code).
+		b. Tương quan thuộc tính: Khó, đang tìm hiểu.
 	2. CLEANING DATA:
 		a. All methods of handling missing data:
 			a.1. Continuious data:
@@ -21,8 +27,6 @@ PREPROCESSING DATA:
 		c. outlier detection:
 			c.1. Bằng z-scores: Nắm rõ thuật toán và tìm ra được tập record bị outlier, nhưng chưa xóa được tập records này trong dataframe.
 			c.2. bằng DSCAN: Hiểu được thuật toán nhưng chưa code kịp.
-		d. Record bị trùng:
-			Xóa những record bị trùng nhau chỉ giữ lại một cái thôi.
 	3. PHẦN TRỰC QUAN HÓA DỮ LIỆU:
 		a. Các loại biểu đồ:
 			a.1. Biểu đồ dạng điểm giữa hai cột (points):
@@ -31,7 +35,7 @@ PREPROCESSING DATA:
 			a.4. Biểu đồ dạng histogram giữa hai cột (hist plot):
 			a.5. Biểu đồ dạng cột nhóm giữa hai cột (bar plot):
 			a.6. Biểu đồ dạng quạt giữa trên hai cột (pie plot):
-			a.7. Biểu đồ dạng 
+			a.7. Trực quan hóa cây quyết định và rừng ngẫu nhiên: code được nhưng hệ điều hành gặp một số lỗi nên chưa chạy được.
 			a.8. Biểu đồ dạng 
 			a.9. Biểu đồ dạng 
 			a.10. Biểu đồ dạng 
@@ -39,9 +43,9 @@ PREPROCESSING DATA:
 	4. PHẦN RỜI RẠC HÓA DỮ LIỆU LIÊN TỤC:
 		a. Rời rạc hóa bằng cây quyết định giữa một cột cần chuyển dựa trên cột đã gắn nhãn: code xong.
 		b. Rời rạc hóa bằng cây quyết định trên cả tập dữ liệu: code xong
-		c. Rời rạc bằng phương pháp "Rừng ngẫu nhiên": hiểu sơ lược thuật toán nhưng chưa code kịp
+		c. Rời rạc bằng phương pháp "Rừng ngẫu nhiên": code được.
 	5. PHẦN CHIA DỮ LIỆU TRƯỚC VÀ SAU KHI HUẤN LUYỆN:
 		a. Chia trước khi tiền xử lý:
 		b. Xử lý độc lập trên các tập khác nhau trên cùng các bước xử lý dữ liệu.
-
+		
 	

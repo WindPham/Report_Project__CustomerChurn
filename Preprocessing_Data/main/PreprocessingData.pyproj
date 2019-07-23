@@ -34,6 +34,9 @@
     <Compile Include="DISCRETISATION.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="INTEGRATION.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MISSING.py">
       <SubType>Code</SubType>
     </Compile>
@@ -47,6 +50,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="main.py" />
+    <Compile Include="support.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TRY_TRAINING.py">
       <SubType>Code</SubType>
     </Compile>
