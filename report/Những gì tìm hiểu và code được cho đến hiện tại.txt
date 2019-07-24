@@ -4,29 +4,25 @@ PREPROCESSING DATA:
 		a. Kết hợp hai dataset lại thành một data set lớn hơn:
 			a.1. Phát hiện vấn đề nhận dạng thực thể: Phần này thường là dò bằng tay hoặc bán thủ công. (đã tìm được cách bán thử công nhưng chưa code kịp).
 			a.2. Phát hiện record trùng lặp (code rồi phần này).
-			a.3. Phát hiện vấn đề bị sai về số chiều của các data set với nhau: (đang code)
-			a.4. Thống nhất giữa hai data set về số chiều: (đang code).
+			a.3. Phát hiện vấn đề bị sai về số chiều của các data set với nhau: (chưa sửa được phần này)
+			a.4. Thống nhất giữa hai data set về số chiều: (chưa sữa được phần này).
 		b. Tương quan thuộc tính: Khó, đang tìm hiểu.
 	2. CLEANING DATA:
 		a. All methods of handling missing data:
 			a.1. Continuious data:
-				+ Remove the missing records;
-				+ mean-methods
-				+ median-methods:
-				+ mode-methods:
+				+ Remove the missing records: code xong
+				+ mean-methods: code xong
+				+ median-methods: code xong
+				+ mode-methods: code xong
 			a.2. Categorical data:
-				+ fixed value:
-				+ mode-methods:
+				+ fixed value: code xong
+				+ mode-methods: code xong
 		b. Normalization Data:
-			b.1. max-min [0,1]: Ban đầu chưa chuẩn hóa các thuộc tính số nguyên và số thực thì khi chạy mô hình trên tập validation là 98~99%
-			Đến khi chuẩn hóa các thuộc tính ở trên thì ta thấy rằng mô hình được train lại thì lại đạt độ chính xác là 100%.
-			Thực sự khi mà train xong lúc chưa chuẩn hóa về [0,1], em thực sự khá bất ngờ với kết quả là 98~99%, em vẫn chưa tin là kết quả có thể cao như vậy. 
-			Chắc có lẻ bản thân dữ liệu không chứa nhiễu, nhưng em không chắc điều này.
-			
-			b.2. z-scores (theo phân phối chuẩn): Đã train thử và thấy score đạt 100%
+			b.1. max-min [0,1]: code xong
+			b.2. z-scores (theo phân phối chuẩn): code xong
 		c. outlier detection:
-			c.1. Bằng z-scores: Nắm rõ thuật toán và tìm ra được tập record bị outlier, nhưng chưa xóa được tập records này trong dataframe.
-			c.2. bằng DSCAN: Hiểu được thuật toán nhưng chưa code kịp.
+			c.1. Bằng z-scores: Code xong
+			c.2. bằng DSCAN: Code xong
 	3. PHẦN TRỰC QUAN HÓA DỮ LIỆU:
 		a. Các loại biểu đồ:
 			a.1. Biểu đồ dạng điểm giữa hai cột (points):
@@ -35,15 +31,20 @@ PREPROCESSING DATA:
 			a.4. Biểu đồ dạng histogram giữa hai cột (hist plot):
 			a.5. Biểu đồ dạng cột nhóm giữa hai cột (bar plot):
 			a.6. Biểu đồ dạng quạt giữa trên hai cột (pie plot):
-			a.7. Trực quan hóa cây quyết định và rừng ngẫu nhiên: code được nhưng hệ điều hành gặp một số lỗi nên chưa chạy được.
-			a.8. Biểu đồ dạng 
-			a.9. Biểu đồ dạng 
-			a.10. Biểu đồ dạng 
-			a.11. Biểu đồ dạng 
+			a.7. BIểu đồ dạng quạt nhưng tạo ra nhiều biểu biểu đồ theo bước nhảy của biến liên tục (biến có dạng như year, month, tenure, season, ...)
+			a.8. Biểu đồ dạng hộp (box plot)
+			a.9. Biểu đồ dạng nhiều hộp biểu diễn theo từng giá trị trong tập giá trị của cột đó.
+			a.10. Biểu đồ dạng histogram và kèm theo hàm mật độ xác suất.
+			a.11. Biểu đồ dạng ihistogram dạng cột chồng các trạng thái trong cùng một cột.
 	4. PHẦN RỜI RẠC HÓA DỮ LIỆU LIÊN TỤC:
 		a. Rời rạc hóa bằng cây quyết định giữa một cột cần chuyển dựa trên cột đã gắn nhãn: code xong.
 		b. Rời rạc hóa bằng cây quyết định trên cả tập dữ liệu: code xong
 		c. Rời rạc bằng phương pháp "Rừng ngẫu nhiên": code được.
+		d. Rời rạc hóa bằng phương pháp chia giõ theo sắp xếp rồi cắt theo tỷ lệ cho trước: đang code
+		e. Rời rạc hóa bằng chia giõ dựa theo độ rộng của dữ liệu: đang code.
+		f. Rời rạc hóa bằng k-mean: đang code.
+		g. Rời rạc hóa bằng k-medoid: đang code.
+		
 	5. PHẦN CHIA DỮ LIỆU TRƯỚC VÀ SAU KHI HUẤN LUYỆN:
 		a. Chia trước khi tiền xử lý:
 		b. Xử lý độc lập trên các tập khác nhau trên cùng các bước xử lý dữ liệu.

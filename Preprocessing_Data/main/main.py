@@ -27,7 +27,7 @@ if __name__=="__main__":
     print("X test  shape = (%d , %d)"%X_test.shape  + ", Y test  shape = (%d)"%Y_test.shape);
 
     X_train['Churn'] = Y_train;
-    models = discre.DISCRETISATION().decision_tree_all_cols(X_train,'Churn', Max_depth = 3, must_not_discre = ['SeniorCitizen']);
+    models = discre.DISCRETISATION().random_forest_all_cols(X_train,'Churn', Max_depth = 2, must_not_discre = ['SeniorCitizen']);
     X_val['Churn'] = Y_val;
     diff_set_val = discre.DISCRETISATION().support_other_set(models, X_val, X_train);
     X_test['Churn'] = Y_test;
@@ -41,13 +41,15 @@ if __name__=="__main__":
     X_train = all.pd.get_dummies(X_train);
     X_val = all.pd.get_dummies(X_val);
     X_test = all.pd.get_dummies(X_test);
-
     list_missing_names_val  = np.setdiff1d(X_train.columns, X_val.columns);
     list_missing_names_tra  = np.setdiff1d(X_val.columns, X_train.columns);
     list_missing_names_tes = np.setdiff1d(X_train.columns, X_test.columns);
 
     inte.INTEGRATION().add_cols(X_val, list_missing_names_val, 0);
     inte.INTEGRATION().add_cols(X_test, list_missing_names_tes, 0);
+
+    inte.INTEGRATION().entity_idenfication_column_not_similar(X_train, X_train);
+
 
     model = all.SVC(C = 50, kernel = 'rbf', gamma = 0.001);
     model.fit(X_val, Y_val);

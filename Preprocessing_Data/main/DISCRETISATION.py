@@ -17,6 +17,25 @@ class DISCRETISATION(object):
     """description of class"""
     def __init__(self):
         return;
+
+
+    #===================================================================================================
+
+    def binning_frequency(self, df, col_name):
+        
+        return;
+
+    #===================================================================================================
+
+    def binning_width(self, df, col_name):
+
+        return;
+    #===================================================================================================
+
+    def k_mean(self, df, col_name):
+
+        return;
+
     #===================================================================================================
     def decision_tree(self, df, trans_col_name, label_col_name, Max_depth = 3, must_not_discre = []):
         if (trans_col_name not in must_not_discre) or len(must_not_discre) == 0:
