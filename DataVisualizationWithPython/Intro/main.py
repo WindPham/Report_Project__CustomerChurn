@@ -12,9 +12,9 @@ if __name__ == "__main__":
     #df.plt_hist('tenure', 3);
     #df.plt_bar('tenure','gender')
     #df.plt_pie('TechSupport', 'tenure');
-    #df.plt_pie_two_cols('TechSupport', 'tenure');
+    df.plt_pie_two_cols('TechSupport', 'tenure');
     #df.plt_box('tenure');
     #df.plt_box_two_cols('TechSupport', 'tenure');
     #df.plt_hist_line('MonthlyCharges', two_axis = True);
     #df.plt_hist_line('MonthlyCharges', two_axis = False);
-    df.plt_hist_for_multi_statement('tenure','TechSupport');
+    #df.plt_hist_for_multi_statement('tenure','TechSupport');
