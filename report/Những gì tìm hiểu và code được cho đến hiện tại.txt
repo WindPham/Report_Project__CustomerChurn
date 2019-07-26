@@ -39,11 +39,10 @@ PREPROCESSING DATA:
 	4. PHẦN RỜI RẠC HÓA DỮ LIỆU LIÊN TỤC:
 		a. Rời rạc hóa bằng cây quyết định giữa một cột cần chuyển dựa trên cột đã gắn nhãn: code xong.
 		b. Rời rạc hóa bằng cây quyết định trên cả tập dữ liệu: code xong
-		c. Rời rạc bằng phương pháp "Rừng ngẫu nhiên": code được.
-		d. Rời rạc hóa bằng phương pháp chia giõ theo sắp xếp rồi cắt theo tỷ lệ cho trước: đang code
-		e. Rời rạc hóa bằng chia giõ dựa theo độ rộng của dữ liệu: đang code.
-		f. Rời rạc hóa bằng k-mean: đang code.
-		g. Rời rạc hóa bằng k-medoid: đang code.
+		c. Rời rạc bằng phương pháp "Rừng ngẫu nhiên": code xong
+		d. Rời rạc hóa bằng phương pháp chia giõ theo sắp xếp rồi cắt theo tỷ lệ cho trước: code xong
+		e. Rời rạc hóa bằng chia giõ dựa theo độ rộng của dữ liệu: code xong
+		f. Rời rạc hóa bằng k-mean: đang xong
 		
 	5. PHẦN CHIA DỮ LIỆU TRƯỚC VÀ SAU KHI HUẤN LUYỆN:
 		a. Chia trước khi tiền xử lý:
