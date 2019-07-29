@@ -22,7 +22,7 @@ if __name__=="__main__":
     #discre.DISCRETISATION().k_mean(df, 'tenure', 4);
     #print(df.tenure.unique());
 
-    Y = df['Churn'].copy();
+    Y = df['Churn'];
     X = df.drop('Churn', axis = 1);
 
     X_train_val, X_test, Y_train_val, Y_test = train_test_split(X, Y, test_size=0.2);
@@ -32,8 +32,8 @@ if __name__=="__main__":
     print("X valid shape = (%d , %d)"%X_val.shape   + ", Y valid shape = (%d)"%Y_val.shape);
     print("X test  shape = (%d , %d)"%X_test.shape  + ", Y test  shape = (%d)"%Y_test.shape);
 
-    X_train['Churn'] = Y_train;
-    list_intervals = discre.DISCRETISATION().random_forest_all_cols(X_train, 'Churn', Max_depth = 3, must_not_discre =['SeniorCitizen']);
+    X_train.loc[:, 'Churn'] = Y_train;
+    list_intervals = discre.DISCRETISATION().random_forest_all_cols(X_train, 'Churn', Max_depth = 4, must_not_discre =['SeniorCitizen']);
     
 
     X_train = X_train.drop("Churn", axis = 1);
