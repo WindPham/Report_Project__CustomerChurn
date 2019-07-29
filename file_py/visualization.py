@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
 
 class PLOT(object):
     #--------------------------------------------------------------------------------------------
@@ -35,33 +37,167 @@ class PLOT(object):
     #--------------------------------------------------------------------------------------------
     def plt_area_two_column(self, col_1_name, col_2_name):
         if(self.__df[col_2_name].dtypes == 'object'):
-            if (scale == 'no'):
-                df = self.__df[[col_1_name, col_2_name]];
-                df = pd.get_dummies(df);
-                df = df.groupby(col_1_name).count();
-                df.plot(kind = 'area');
+            df = self.__df[[col_1_name, col_2_name]];
+            df = pd.get_dummies(df);
+            df = df.groupby(col_1_name).agg(lambda x: x.eq(1).sum());
+            df.plot(kind = 'area');
             plt.show();
         else:
             print("Can't draw!");
         return;
-    #---------------------------------------------------------------------------------------------
-    def plt_hist(self, col_name, Bins = 10):
-        self.__df[col_name].plot(kind = 'hist', bins = Bins);
+    #--------------------------------------------------------------------------------------------
+    def plt_hist(self, col_name, Bins = 10, Normed = False, Edgecolor = 'black'):
+        self.__df[col_name].plot(kind = 'hist', bins = Bins, normed = Normed, edgecolor = Edgecolor);
         plt.show();
         return;
-    #---------------------------------------------------------------------------------------------
+    #--------------------------------------------------------------------------------------------
     def plt_bar(self, col_1_name, col_2_name):
         df =  self.__df[[col_1_name, col_2_name]];
         df = pd.get_dummies(df);
-        df = df.groupby(col_1_name).count();
-        print(df.head())
+        df = df.groupby(col_1_name).agg(lambda x: x.eq(1).sum());
         df.plot(kind = 'bar');
         plt.show();
         return;
-
-
-
-
+    #--------------------------------------------------------------------------------------------
+    def plt_pie(self, col_1_name, col_2_name):
+        df = self.__df.groupby(col_1_name).sum();
+        df[col_2_name].plot(kind = 'pie');
+        plt.show();
+        return;
+    #--------------------------------------------------------------------------------------------
+    def plt_pie_two_cols(self, col_1_name, col_2_name):
+        df = self.__df[[col_1_name,col_2_name]];
+        df = pd.get_dummies(df);
+        df = df.groupby(col_2_name).agg(lambda x: x.eq(1).sum());
+        #label = df[col_2_name].to_frame();
+        print(df.sum(axis = 1));
+        #r_mean = np.mean(df.sum(axis = 1));
+        label = df.index;
+        df = df.transpose();
+        
+        fig, axes = plt.subplots(int(len(label)/12), 12);
+        for i, ax in enumerate(axes.flatten()):
+            if (i==len(label)):break;
+            ax.pie(df[i+1], radius = 1.3, autopct="%.1f%%", pctdistance=0.5)
+            ax.set_title(str(i+1) + "_" + str(df[i+1].sum()) );
+        plt.show();
+        return;
+    #--------------------------------------------------------------------------------------------
+    def plt_box(self, col_name):
+        self.__df[col_name].plot(kind = 'box');
+        plt.show();
+        return;
+    #--------------------------------------------------------------------------------------------
+    def plt_box_two_cols(self, col_1_name, col_2_name):
+        df = self.__df[[col_1_name,col_2_name]];
+        df = pd.get_dummies(df);
+        df = df.groupby(col_2_name).agg(lambda x: x.eq(1).sum());
+        df.plot(kind = 'box');
+        plt.show();
+        return;
+    #--------------------------------------------------------------------------------------------
+    def plt_hist_line(self, col_name, Bins = 20, Edgecolor = 'black', two_axis = False):
+        if two_axis == False:
+            self.__df[col_name].plot(kind = 'hist', bins = Bins, normed = True, edgecolor = Edgecolor);
+            self.__df[col_name].plot(kind = 'kde')
+            plt.show();
+        else:
+            fig,ax = plt.subplots();
+            self.__df[col_name].plot(kind = 'hist', bins = Bins, normed = True, edgecolor = Edgecolor);
+            ax_other = ax.twinx();
+            self.__df[col_name].plot(kind = 'kde')
+            plt.show();
+        return;
+    #--------------------------------------------------------------------------------------------
+    def plt_hist_for_multi_statement(self, col_1_name, col_2_name):
+        df =  self.__df[[col_1_name, col_2_name]];
+        df = pd.get_dummies(df);
+        df = df.groupby(col_1_name).agg(lambda x: x.eq(1).sum());
+        #df = df.transpose();
+        df.plot(kind = 'hist', bins = 50);
+        plt.show();
+        return;
+    #--------------------------------------------------------------------------------------------
+    def plt_points_with_labels_two_cols_and_label(self, col_1_name, col_2_name, label_name):
+        if self.__df[col_1_name].dtypes != 'object' and self.__df[col_2_name].dtypes != 'object':
+            df = self.__df.sort_values(by = col_1_name);
+            labels = df[label_name].unique();
+            markers = ['o', '^', '+', '-', 'v', '<', '>', '8', 's', 'p', '*', 'h', 'H', 'D', 'd', 'P', 'X'];
+            for i in range(0, len(labels)):
+                plt.scatter(x=df[col_1_name], y = df[col_2_name], s = df[label_name]==labels[i], marker = markers[i]);
+            plt.show();
+        else :
+            print("Can't draw!");
+        return;
+    #-------------------------------------------------------------------------------------------
+    def plt_3d_scatter_three_cols(self, col_x, col_y, col_z):
+        if self.__df[col_x].dtypes != 'object' and self.__df[col_y].dtypes != 'object' and self.__df[col_z].dtypes != 'object':
+            df = self.__df[[col_x, col_y, col_z]];
+            fig = plt.figure();
+            ax = fig.add_subplot(111, projection='3d')
+            ax.scatter(df[col_x], df[col_y], df[col_z], 'red');
+            plt.show();
+        return;
+    #--------------------------------------------------------------------------------------------
+    def plt_3d_scatter_three_cols_and_label(self, col_x, col_y, col_z, label_name):
+        if self.__df[col_x].dtypes != 'object' and self.__df[col_y].dtypes != 'object' and self.__df[col_z].dtypes != 'object':
+            df = self.__df[[col_x, col_y, col_z, label_name]];
+            labels = df[label_name].unique();
+            markers = ['o', '^', '+', '-', 'v', '<', '>', '8', 's', 'p', '*', 'h', 'H', 'D', 'd', 'P', 'X'];
+            fig = plt.figure();
+            ax = fig.add_subplot(111, projection='3d')
+            for i in range(0, len(labels)):
+                ax.scatter(df[col_x], df[col_y], df[col_z], s = df[label_name]==labels[i], marker = markers[i]);
+            plt.show();
+        return;
+    #---------------------------------------------------------------------------------------------
+    def plt_3d_line_three_cols(self, col_x, col_y, col_z):
+        if self.__df[col_x].dtypes != 'object' and self.__df[col_y].dtypes != 'object':
+            df = self.__df[[col_x, col_y, col_z]];
+            fig = plt.figure()
+            ax = fig.gca(projection='3d')
+            ax.plot_trisurf(df[col_x], df[col_y], df[col_z], cmap=plt.cm.viridis, linewidth=0.2)
+            plt.show();
+        else :
+            print("Can't draw!");
+        return;
+    #----------------------------------------------------------------------------------------------
+    def plt_scatter_two_cols_with_label_and_radius(self, col_1_name, col_2_name, label_name):
+        Cs = ['red', 'blue', 'orange'];
+        if self.__df[col_1_name].dtypes != 'object' and self.__df[col_2_name].dtypes != 'object':
+            plt.figure(figsize = (100, 100))
+            df = self.__df[ [col_1_name, col_2_name, label_name] ];
+            labels = df[label_name].unique();
+            for j in range(0, len(labels)):
+                plt.scatter(df[col_1_name], df[col_2_name], 
+                            s = 10*(df[col_2_name]/df[col_1_name])*(df[label_name]==labels[j]), 
+                            c = Cs[j], 
+                            cmap="Accent", alpha=0.6, edgecolors="white", linewidth=2); 
+            plt.show();
+        return;
+    #----------------------------------------------------------------------------------------------
+    def plt_scatter_three_cols_with_label_and_radius(self, col_time_name, col_1_name, col_2_name, label_name):
+        if self.__df[col_1_name].dtypes != 'object' and self.__df[col_2_name].dtypes != 'object':
+            df = self.__df.sort_values(by = col_1_name)[[col_time_name, col_1_name, col_2_name, label_name]];
+            labels = df[label_name].unique();
+            fig, axes = plt.subplots(int(len(df[col_time_name].unique())/2) + 1, 2, figsize = (100, 200));
+            Cs = ['red', 'blue', 'orange']
+            for i, ax in enumerate(axes.flatten()):
+                if (i==len(df[col_time_name].unique())):break;
+                df_tmp = df [df[col_time_name] == i+1];#start 1 to 72
+                for j in range(0, len(labels)):
+                    S = df_tmp[ df_tmp[label_name] == j];
+                    ax.scatter(df_tmp[col_1_name], df_tmp[col_2_name], 
+                               s = 10*(df_tmp[col_2_name]/df_tmp[col_1_name])*(df_tmp[label_name]==labels[j]),
+                               c = Cs[j], 
+                               cmap="Accent", alpha=0.6, edgecolors="white", linewidth=2);
+                    #df_tmp[label_name] == labels[j]
+            plt.show();
+        else:
+            print("Can't draw!");
+        return;
+		
+		
 if __name__ == "__main__":
     df = PLOT("WA_Fn-UseC_-Telco-Customer-Churn-standard.csv");
     #df.plt_line_two_columns("tenure", "TotalCharges");
@@ -71,5 +207,17 @@ if __name__ == "__main__":
     #df.plt_area_two_column("tenure", "TechSupport");
     #df.plt_area_two_column(col_1_name = "tenure", col_2_name = "gender");
     #df.plt_hist('tenure', 3);
-    df.plt_bar('tenure','TechSupport');
-	
+    #df.plt_bar('tenure','gender')
+    #df.plt_pie('TechSupport', 'tenure');
+    #df.plt_pie_two_cols('TechSupport', 'tenure');
+    #df.plt_box('tenure');
+    #df.plt_box_two_cols('TechSupport', 'tenure');
+    #df.plt_hist_line('MonthlyCharges', two_axis = True);
+    #df.plt_hist_line('MonthlyCharges', two_axis = False);
+    #df.plt_hist_for_multi_statement('tenure','TechSupport');
+    #df.plt_points_with_labels_two_cols_and_label("tenure", "TotalCharges", 'TechSupport');
+    #df.plt_3d_scatter_three_cols('tenure', 'MonthlyCharges', 'TotalCharges');
+    #df.plt_3d_scatter_three_cols_and_label('tenure', 'MonthlyCharges', 'TotalCharges', 'Churn');
+    #df.plt_3d_line_three_cols('tenure', 'MonthlyCharges', 'TotalCharges');
+    #df.plt_scatter_two_cols_with_label_and_radius('MonthlyCharges', "TotalCharges", 'Churn');
+    df.plt_scatter_three_cols_with_label_and_radius('tenure', 'MonthlyCharges', "TotalCharges", 'Churn');
