@@ -35,7 +35,15 @@ PREPROCESSING DATA:
 			a.8. Biểu đồ dạng hộp (box plot)
 			a.9. Biểu đồ dạng nhiều hộp biểu diễn theo từng giá trị trong tập giá trị của cột đó.
 			a.10. Biểu đồ dạng histogram và kèm theo hàm mật độ xác suất.
-			a.11. Biểu đồ dạng ihistogram dạng cột chồng các trạng thái trong cùng một cột.
+			a.11. Biểu đồ dạng histogram dạng cột chồng các trạng thái trong cùng một cột.
+			a.12. Biểu đồ dạng quạt nhưng rổng ruột cho một cặp biến.
+			a.13. Biểu đồ dạng quạt nhưng một cặp biến nhưng lại là một dãy các biểu đồ quạt theo unique trên một cột.
+			a.14. Biểu đồ 3D dạng điểm biểu diễn ba thuộc tính liên tục.
+			a.15. Biểu đồ 3D dạng điểm nhưng có phân chia theo nhãn đã gán sẵn theo bên ngoài.
+			a.16. Biều đồ dạng điểm dạng có gán nhãn và thể hiện độ rộng theo bán kính của từng điểm theo một thuộc tính nào đó. (Biểu đồ dạng bong bóng)
+			a.17. Biểu đồ thể hiện tất cả các biểu đồ con của một thuộc tính theo thời gian (hay một cột có tính chất tương tự như vậy) để thể hiện mối quan hệ của thời điểm trước và thời điểm sau.
+			a.18. Biểu đồ dạng đường biểu diễn trong không gian 3D.
+			
 	4. PHẦN RỜI RẠC HÓA DỮ LIỆU LIÊN TỤC:
 		a. Rời rạc hóa bằng cây quyết định giữa một cột cần chuyển dựa trên cột đã gắn nhãn: code xong.
 		b. Rời rạc hóa bằng cây quyết định trên cả tập dữ liệu: code xong

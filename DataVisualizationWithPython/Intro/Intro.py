@@ -163,7 +163,7 @@ class PLOT(object):
         return;
     #----------------------------------------------------------------------------------------------
     def plt_scatter_two_cols_with_label_and_radius(self, col_1_name, col_2_name, label_name):
-        Cs = ['red', 'blue', 'orange'];
+        Cs = ['blue', 'green', 'red', 'cyan', 'magenta', 'yellow', 'black', 'white'];
         if self.__df[col_1_name].dtypes != 'object' and self.__df[col_2_name].dtypes != 'object':
             plt.figure(figsize = (100, 100))
             df = self.__df[ [col_1_name, col_2_name, label_name] ];
@@ -180,10 +180,8 @@ class PLOT(object):
         if self.__df[col_1_name].dtypes != 'object' and self.__df[col_2_name].dtypes != 'object':
             df = self.__df.sort_values(by = col_1_name)[[col_time_name, col_1_name, col_2_name, label_name]];
             labels = df[label_name].unique();
-            fig, axes = plt.subplots(int(len(df[col_time_name].unique())/2) + 1, 2, figsize = (100, 200));
-            Cs = ['red', 'blue', 'orange']
-            #fig.figsize=(1000, 1000000);
-            #print(type(axes))
+            fig, axes = plt.subplots(int(len(df[col_time_name].unique())/2) + 1, 2, figsize = (10, 20));
+            Cs = ['blue', 'green', 'red', 'cyan', 'magenta', 'yellow', 'black', 'white']
             for i, ax in enumerate(axes.flatten()):
                 if (i==len(df[col_time_name].unique())):break;
                 df_tmp = df [df[col_time_name] == i+1];#start 1 to 72
@@ -193,8 +191,42 @@ class PLOT(object):
                                s = 10*(df_tmp[col_2_name]/df_tmp[col_1_name])*(df_tmp[label_name]==labels[j]),
                                c = Cs[j], 
                                cmap="Accent", alpha=0.6, edgecolors="white", linewidth=2);
-                    #df_tmp[label_name] == labels[j]
             plt.show();
         else:
             print("Can't draw!");
         return;
+    #----------------------------------------------------------------------------------------------
+    def plt_donut(self, col_1_name, col_2_name, Radius = 1, radius_inside = 0.5):
+        df = self.__df.groupby(col_1_name).sum();
+        df[col_2_name].plot(kind = 'pie', radius = Radius);
+        my_circle=plt.Circle( (0,0), radius = Radius - radius_inside, color='white');
+        p=plt.gcf()
+        p.gca().add_artist(my_circle)
+        plt.show();
+        return;
+    #----------------------------------------------------------------------------------------------------
+    def plt_donut_two_cols(self, col_1_name, col_2_name):
+        df = self.__df[[col_1_name,col_2_name]];
+        df = pd.get_dummies(df);
+        df = df.groupby(col_2_name).agg(lambda x: x.eq(1).sum());
+        #label = df[col_2_name].to_frame();
+        #r_mean = np.mean(df.sum(axis = 1));
+        label = df.index;
+        df = df.transpose();
+        
+        fig, axes = plt.subplots(int(len(label)/12), 12);
+        for i, ax in enumerate(axes.flatten()):
+            if (i==len(label)):break;
+            ax.pie(df[i+1], radius = 1.3, autopct="%.1f%%", pctdistance=0.5);
+            my_circle = plt.Circle( (0,0), radius = 0.8, color='white');
+            ax.add_patch(my_circle);
+            ax.set_title(str(i+1) + "_" + str(df[i+1].sum()) );
+        plt.show();
+        return;
+    #----------------------------------------------------------------------------------------------------
+
+    #----------------------------------------------------------------------------------------------------
+    #----------------------------------------------------------------------------------------------------
+    #----------------------------------------------------------------------------------------------------
+    #----------------------------------------------------------------------------------------------------
+    #----------------------------------------------------------------------------------------------------

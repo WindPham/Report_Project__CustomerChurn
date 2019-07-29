@@ -33,7 +33,7 @@ if __name__=="__main__":
     print("X test  shape = (%d , %d)"%X_test.shape  + ", Y test  shape = (%d)"%Y_test.shape);
 
     X_train.loc[:, 'Churn'] = Y_train;
-    list_intervals = discre.DISCRETISATION().random_forest_all_cols(X_train, 'Churn', Max_depth = 4, must_not_discre =['SeniorCitizen']);
+    list_intervals = discre.DISCRETISATION().random_forest_all_cols(X_train, 'Churn', Max_depth = 2, must_not_discre =['SeniorCitizen']);
     
 
     X_train = X_train.drop("Churn", axis = 1);
@@ -53,8 +53,4 @@ if __name__=="__main__":
     model = all.SVC(C = 50, kernel = 'rbf', gamma = 0.001);
     model.fit(X_val, Y_val);
     print(model.score(X_train, Y_train));
-    
-    
-    
-    
     #
