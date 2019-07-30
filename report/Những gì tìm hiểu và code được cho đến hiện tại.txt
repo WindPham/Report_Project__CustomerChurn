@@ -55,5 +55,9 @@ PREPROCESSING DATA:
 	5. PHẦN CHIA DỮ LIỆU TRƯỚC VÀ SAU KHI HUẤN LUYỆN:
 		a. Chia trước khi tiền xử lý:
 		b. Xử lý độc lập trên các tập khác nhau trên cùng các bước xử lý dữ liệu.
-		
+
+
+PHẦN DEEP LEARNING:
+	1. Học tensorflow:
+		a. 
 	
