@@ -22,7 +22,7 @@ if __name__ == "__main__":
     #df.plt_3d_scatter_three_cols('tenure', 'MonthlyCharges', 'TotalCharges');
     #df.plt_3d_scatter_three_cols_and_label('tenure', 'MonthlyCharges', 'TotalCharges', 'Churn');
     #df.plt_3d_line_three_cols('SeniorCitizen', 'MonthlyCharges', 'TotalCharges');
-    df.plt_scatter_two_cols_with_label_and_radius('MonthlyCharges', "TotalCharges", 'Churn');
+    #df.plt_scatter_two_cols_with_label_and_radius('MonthlyCharges', "TotalCharges", 'Churn');
     #df.plt_scatter_three_cols_with_label_and_radius('tenure', 'MonthlyCharges', "TotalCharges", 'Churn');
     #df.plt_donut('TechSupport', 'tenure');
     #df.plt_donut_two_cols('TechSupport', 'tenure');
