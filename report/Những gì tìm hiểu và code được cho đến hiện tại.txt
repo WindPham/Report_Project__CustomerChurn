@@ -56,6 +56,15 @@ PREPROCESSING DATA:
 		a. Chia trước khi tiền xử lý:
 		b. Xử lý độc lập trên các tập khác nhau trên cùng các bước xử lý dữ liệu.
 
+	6. GIẢM CHIỀU DỮ LIỆU:
+		a. Feature selection:
+			a.1. Missing value ratio: Đã code xong
+			a.2. Low Variance filter: Đã code xong
+			a.3. High Correlation filter: Đã code xong
+			a.4. Backward Feature Elimination: Đã code xong
+			a.5. Forward Feature Selection: Đang code:
+			a.6. Random Forest: Đã code xong.
+		b. Dim reduction:
 
 PHẦN DEEP LEARNING:
 	1. Học tensorflow:
