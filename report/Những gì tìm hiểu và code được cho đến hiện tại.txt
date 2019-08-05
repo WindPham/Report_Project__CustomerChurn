@@ -62,9 +62,21 @@ PREPROCESSING DATA:
 			a.2. Low Variance filter: Đã code xong
 			a.3. High Correlation filter: Đã code xong
 			a.4. Backward Feature Elimination: Đã code xong
-			a.5. Forward Feature Selection: Đang code:
+			a.5. Forward Feature Selection: Đã code xong
 			a.6. Random Forest: Đã code xong.
+			a.7. Factor analysis: Đã code xong
+				
 		b. Dim reduction:
+			b.1. Principle Feature Analysis: Tìm hiểu kỹ thuật toán
+				+ Cơ sở toán học: Chuẩn của một vector, chuẩn của một ma trận
+				+ Xây dựng hàm mục tiêu:
+				+ Phân tích hàm mục tiêu:
+				+ Phân tích hàm tiêu để suy ra hàm mất mác:
+				+ Tối ưu hàm mất mác.
+				+ Tìm nghiệm của bài toán.
+				+ Hiểu các bước thực hiện theo quy trình của bài toán.
+				+ Code đề mô bằng hàm dựng sẵn của sklearn.
+
 
 PHẦN DEEP LEARNING:
 	1. Học tensorflow:

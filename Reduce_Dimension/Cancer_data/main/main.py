@@ -12,7 +12,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import Perceptron
 from sklearn.feature_selection import f_regression
 from sklearn.feature_selection import RFE
-
+from mlxtend.feature_selection import SequentialFeatureSelector as sfs
+from factor_analyzer import FactorAnalyzer
+from sklearn.decomposition import PCA
 
 class REDUCING(object):
 
@@ -39,7 +41,10 @@ class REDUCING(object):
                     plt.show();
     #=====================================================================================================================
     #=====================================================================================================================
-    
+    def __add_a_col(self, col_name, col):
+        if(col_name not in self.__df.columns):
+            self.__df[col_name]=col;
+        return;
     #=====================================================================================================================
     def shape(self): return self.__df.shape;
     #=====================================================================================================================
@@ -124,11 +129,35 @@ class REDUCING(object):
         X = self.__df;
         X = pd.get_dummies(X);
         model = RandomForestClassifier(n_estimators = 100, max_depth = 100);
-        var = [];
-        for i in range(0,len(X.columns)-1):
-            if ffs[0][i] >=10:
-                var.append(X.columns[i])
-
+        reduced_model = sfs(model, k_features = len(X.columns) - number_of_features_need_to_delete, 
+                            forward = True, floating = False, verbose = 2, scoring = 'accuracy', cv = 5);
+        reduced_model.fit(X, Y);
+        feature_cols = list(reduced_model.k_feature_idx_)
+        list_name_out = list(X.columns[feature_cols]);
+        self.__drop_col(list_name_out)
+        return;
+    #=====================================================================================================================
+    def factor_analysis(self, number_of_features_need_to_delete, label):
+        fa = FactorAnalyzer(rotation = None);
+        Y = self.__df[label];
+        self.__drop_col([label]);
+        X = self.__df;
+        X = pd.get_dummies(X);
+        fa.fit(X, len(X.columns)-number_of_features_need_to_delete)
+        
+        val = fa.get_communalities();
+        indices = list(np.argsort(val))[:len(X.columns)-number_of_features_need_to_delete];
+        list_name_out = X.columns[indices];
+        self.__drop_col(list_name_out)
+        return;
+    def principle_component_analysis(self, number_of_features_need_to_delete, label):
+        Y = self.__df[label];
+        self.__drop_col([label]);
+        X = self.__df;
+        X = pd.get_dummies(X);
+        pca_model = PCA();
+        pca_model.fit(X);
+        print((pca_model.explained_variance_ratio_)[:-number_of_features_need_to_delete])
         return;
     #=====================================================================================================================
     #=====================================================================================================================
@@ -145,21 +174,7 @@ class REDUCING(object):
     #=====================================================================================================================
     #=====================================================================================================================
     #=====================================================================================================================
-    #=====================================================================================================================
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
+   
 
 if __name__=='__main__':
     rd = REDUCING('data.csv');
@@ -172,6 +187,8 @@ if __name__=='__main__':
     #rd.high_correlation_filter(0.8)
     #rd.random_forest(10, 'diagnosis');
     #rd.backward_feature_elimination(10, 'diagnosis');
-    rd.forward_feature_selection(10, 'diagnosis')
+    #rd.factor_analysis(20, 'diagnosis');
+    rd.principle_component_analysis(10, 'diagnosis');
+
     print(rd.shape())
     #print("f");
