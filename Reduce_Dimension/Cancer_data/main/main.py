@@ -15,10 +15,10 @@ from sklearn.feature_selection import RFE
 from mlxtend.feature_selection import SequentialFeatureSelector as sfs
 from factor_analyzer import FactorAnalyzer
 from sklearn.decomposition import PCA
-
+from sklearn.decomposition import FastICA
+from sklearn import preprocessing
+from sklearn.svm import SVC
 class REDUCING(object):
-
-
     def __init__(self, file_name):
         self.__df = pd.read_csv(file_name);
         #print(self.__df.head(3));
@@ -26,7 +26,7 @@ class REDUCING(object):
         return;
     #=====================================================================================================================
     def reset(self):
-        self.__df.reset_index(inplace=True);
+        self.__df.reset_index(drop=True, inplace=True);
         return;
     #=====================================================================================================================
     #=====================================================================================================================
@@ -58,8 +58,8 @@ class REDUCING(object):
             if( (self.__df[i].isnull().sum() / self.__df.shape[0])*100 > threshold):
                 list_name_out.append(i);
         self.__drop_col(list_name_out);
-        #print(self.__df.head(2));
-        return;
+        X = self.__df;
+        return X;
     #=====================================================================================================================
     def low_variance_filter(self, threshold):
         df_var = self.__df.var();
@@ -72,7 +72,8 @@ class REDUCING(object):
                 #print('\n')
                 list_name_out.append(self.__df.columns[i]);
         self.__drop_col(list_name_out);
-        return;
+        X = self.__df;
+        return X;
     #=====================================================================================================================
     def high_correlation_filter(self, threshold):
         df_corr = self.__df.corr();
@@ -83,7 +84,8 @@ class REDUCING(object):
                     list_out.append(df_corr.columns[j]);
         list_name_out = list(set(list_out));
         self.__drop_col(list_name_out);
-        return;
+        X = self.__df;
+        return X;
     #=====================================================================================================================
     def random_forest(self, number_of_features_need_to_delete, label):
         model = RandomForestClassifier(n_estimators = 100, max_depth = 100);
@@ -106,7 +108,8 @@ class REDUCING(object):
         #print(important_features[indices])
         #print(np.sort(important_features))
         self.__drop_col(list_name_out);
-        return;
+        X = self.__df;
+        return X
     #=====================================================================================================================
     def backward_feature_elimination(self, number_of_features_need_to_delete, label):
         perc = Perceptron();
@@ -119,9 +122,11 @@ class REDUCING(object):
         rank = rfe.ranking_;
         #print(rank);
         indices = np.argsort(rank)[:number_of_features_need_to_delete-len(X.columns)];
+        print(indices)
         list_name_out = X.columns[indices];
         self.__drop_col(list_name_out);
-        return;
+        X = self.__df;
+        return X;
     #=====================================================================================================================
     def forward_feature_selection(self, number_of_features_need_to_delete, label):
         Y = self.__df[label];
@@ -134,8 +139,9 @@ class REDUCING(object):
         reduced_model.fit(X, Y);
         feature_cols = list(reduced_model.k_feature_idx_)
         list_name_out = list(X.columns[feature_cols]);
-        self.__drop_col(list_name_out)
-        return;
+        self.__drop_col(list_name_out);
+        X = self.__df;
+        return X;
     #=====================================================================================================================
     def factor_analysis(self, number_of_features_need_to_delete, label):
         fa = FactorAnalyzer(rotation = None);
@@ -149,46 +155,103 @@ class REDUCING(object):
         indices = list(np.argsort(val))[:len(X.columns)-number_of_features_need_to_delete];
         list_name_out = X.columns[indices];
         self.__drop_col(list_name_out)
-        return;
+        X = self.__df;
+        return X;
+    #=====================================================================================================================
     def principle_component_analysis(self, number_of_features_need_to_delete, label):
         Y = self.__df[label];
         self.__drop_col([label]);
         X = self.__df;
         X = pd.get_dummies(X);
-        pca_model = PCA();
+        pca_model = PCA(n_components = len(X.columns)-number_of_features_need_to_delete);
+        X = preprocessing.scale(X);
         pca_model.fit(X);
-        print((pca_model.explained_variance_ratio_)[:-number_of_features_need_to_delete])
-        return;
+        X = pca_model.transform(X);
+        return pca_model, X, np.array(Y);  
     #=====================================================================================================================
+    def independent_component_analysis(self, number_of_features_need_to_delete, label):
+        Y = self.__df[label];
+        self.__drop_col([label]);
+        X = self.__df;
+        X = pd.get_dummies(X);
+        ica_model = FastICA(n_components = len(X.columns)-number_of_features_need_to_delete);
+        X = preprocessing.scale(X);
+        ica_model.fit(X);
+        X = ica_model.transform(X);
+        return ica_model, X, np.array(Y);
     #=====================================================================================================================
-    #=====================================================================================================================
-    #=====================================================================================================================
-    #=====================================================================================================================
-    #=====================================================================================================================
-    #=====================================================================================================================
-    #=====================================================================================================================
-    #=====================================================================================================================
-    #=====================================================================================================================
-    #=====================================================================================================================
-    #=====================================================================================================================
-    #=====================================================================================================================
-    #=====================================================================================================================
-    #=====================================================================================================================
-   
+def make_label_out(df, label):
+    Y = df[label];
+    df.drop([label], axis = 1, inplace = True);
+    X = df;
+    X=preprocessing.scale(X);
+    return np.array(X), np.array(Y);
+def model_make_df(model, X):
+    return model.transform(X);
 
-if __name__=='__main__':
-    rd = REDUCING('data.csv');
-
+def test_for_reducing():
+    rd = REDUCING('data_train.csv');
+    val = pd.read_csv('data_val.csv');
+    val.reset_index(drop=True, inplace=True);
+    test = pd.read_csv('data_test.csv');
+    test.reset_index(drop=True, inplace=True);
     rd.missing_values_ratio(20.0);
     rd.reset();
-    print(rd.shape())
+    #print(rd.shape())
     #rd.full_scatter();
     #rd.low_variance_filter(0.25);
-    #rd.high_correlation_filter(0.8)
+    #rd.high_correlation_filter(0.8);
     #rd.random_forest(10, 'diagnosis');
     #rd.backward_feature_elimination(10, 'diagnosis');
     #rd.factor_analysis(20, 'diagnosis');
-    rd.principle_component_analysis(10, 'diagnosis');
+    #X, Y = rd.principle_component_analysis(10, 'diagnosis');
+    model, X, Y = rd.principle_component_analysis(15, 'diagnosis');
+    Xv, Yv = make_label_out(val, 'diagnosis');
+    Xt, Yt = make_label_out(test, 'diagnosis');
 
-    print(rd.shape())
-    #print("f");
+    Xv=model_make_df(model, Xv);
+    Xt=model_make_df(model, Xt);
+    print(X.shape);
+    print(Y.shape);
+    print(Xv.shape);
+    print(Yv.shape);
+    print(Xt.shape);
+    print(Yt.shape);
+
+    Cs = [0.0001, 0.000945, 0.001, 0.002, 0.003, 0.004, 0.005, 0.0075, 0.009, 0.01, 0.02, 0.04, 0.05, 0.075, 0.09, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 0.9, 1, 2, 5, 10, 20, 50, 100];
+    for i in Cs:
+        svm_model = SVC(kernel='linear', C = i);
+        svm_model.fit(X, Y);
+        tr_sc = svm_model.score(X, Y);
+        va_sc = svm_model.score(Xv, Yv);
+        print("Reducing set: C = %f: kernel = linear: train-score = %f: val-score = %f"%(i,tr_sc,va_sc));
+def test():
+    train = pd.read_csv('data_train.csv');
+    train.drop('id', axis=1, inplace=True);
+    train.reset_index(drop=True, inplace=True);
+    val = pd.read_csv('data_val.csv');
+    val.reset_index(drop=True, inplace=True);
+    test = pd.read_csv('data_test.csv');
+    test.reset_index(drop=True, inplace=True);
+
+    X, Y = make_label_out(train, 'diagnosis');
+    Xv, Yv = make_label_out(val, 'diagnosis');
+    Xt, Yt = make_label_out(test, 'diagnosis');
+
+    print(X.shape);
+    print(Y.shape);
+    print(Xv.shape);
+    print(Yv.shape);
+    print(Xt.shape);
+    print(Yt.shape);
+
+    Cs = [0.0001, 0.000945, 0.001, 0.002, 0.003, 0.004, 0.005, 0.0075, 0.009, 0.01, 0.02, 0.04, 0.05, 0.075, 0.09, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 0.9, 1, 2, 5, 10, 20, 50, 100];
+    for i in Cs:
+        svm_model = SVC(kernel='linear', C = i);
+        svm_model.fit(X, Y);
+        tr_sc = svm_model.score(X, Y);
+        va_sc = svm_model.score(Xv, Yv);
+        print("Normal set: C = %f: kernel = linear: train-score = %f: val-score = %f"%(i,tr_sc,va_sc));
+if __name__=='__main__':
+    test_for_reducing();
+    test();
