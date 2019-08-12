@@ -77,7 +77,14 @@ PREPROCESSING DATA:
 				+ Hiểu các bước thực hiện theo quy trình của bài toán.
 				+ Code đề mô bằng hàm dựng sẵn của sklearn.
 			b.2 Independent Feature Analysis: đã code xong.
-
+PHẦN NEURAL NETWORK:
+	1. Mô hình 1 tầng ẩn đơn giản nhất:
+		Code chia thành 3 class:	Neuron: chứa tế bào hoặc mỗi đơn vị
+						NeuronLayer: khai báo tầng của mạng.
+						Neural network: Khai báo mạng nẻual
+ 		Hàm kích hoạt: tanh
+		Hàm độ lỗi: mean_square_error
+		Lan truyền tiến
 
 PHẦN DEEP LEARNING:
 	1. Học tensorflow:
