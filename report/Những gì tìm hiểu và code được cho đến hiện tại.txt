@@ -85,7 +85,22 @@ PHẦN NEURAL NETWORK:
  		Hàm kích hoạt: tanh
 		Hàm độ lỗi: mean_square_error
 		Lan truyền tiến
+	2. Mo hinh nhiều hơn một tầng ẩn:
+Mô hình em cài đặt như thế này:
+Class Network là class neural net:
+	gồm các thuộc tính:
+		+ L: int --> số tầng
+		+ input_layer: InputLayer --> tầng input kiểu InputLayer.
+		+ hidden_layers: HiddenLayer --> mảng các tầng hidden kiểu HiddenLayer.
+		+ output_layer: OutputLayer --> tầng output kiểu OutputLayer.
+	Phương thức:
+		+ def __init__(self, num_of_hidden_layers, array_num_of_unit_each_layer, Ws, bs)
+		+ def feed_forward(X)
+		+ train:
 
+Class Layer: abstract class:
+	InputLayer, OUputLayer, HiddenLayer inherit Layer
+Class Connection: chứa W và b
 PHẦN DEEP LEARNING:
 	1. Học tensorflow:
 		a. 
