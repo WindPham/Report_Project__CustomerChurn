@@ -15,14 +15,17 @@ class Connection(object):
         return;
 
     def Z(self, A_of_first_layer):
-        print(self.W.T.shape)
+        #print(self.W.T.shape)
         return np.dot(self.W.T, A_of_first_layer);
 
     def print(self):
         print("W:\n %s"%(self.W));
         print("b: %s"%(self.b));
         print("trade: %s"%str(self.trade));
-    
         return;
 
+    def update(self, eta, pdJ_pdW, pdJ_pdb):
+        self.W += -eta*pdJ_pdW;
+        self.b += -eta*pdJ_pdb;
+        return;
 

@@ -8,8 +8,7 @@ class HiddenLayer(Layer):
         self.A = np.zeros((d));
         return;
     def activation_function(self, s):
-
-        return 1 / (1+np.exp(-s));
+        return (s>0)*s;
 
     def Z_to_A(self):
         self.A = self.activation_function(self.Z);
@@ -18,5 +17,7 @@ class HiddenLayer(Layer):
     def set_Z(self, Z):
         self.Z=Z;
         return;
+
+    
 
     

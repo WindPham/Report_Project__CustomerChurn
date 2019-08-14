@@ -3,12 +3,21 @@ from Layer import Layer
 
 class OutputLayer(Layer):
     """description of class"""
-    def __init__(self, N):
+    def __init__(self, N, n_class):
         self.Z = np.array([]*N);
+        self.A = np.array([]*N);
         return;
 
-    def set_Z(self, A_from_to_the_last_hidden_layer):
-        self.Z = np.sign(A_from_to_the_last_hidden_layer);
+    def activation_function(self, s):
+        exps = np.exp(s);
+        return exps / np.sum(exps, axis = 0);
+
+    def set_Z(self, Z):
+        self.Z=Z;
+        return;
+
+    def Z_to_A(self):
+        self.A = self.activation_function(self.Z);
         return;
 
     
