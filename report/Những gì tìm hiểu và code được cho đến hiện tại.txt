@@ -87,7 +87,7 @@ PHẦN NEURAL NETWORK:
 		Lan truyền tiến
 	2. Mo hinh nhiều hơn một tầng ẩn:
 Mô hình em cài đặt như thế này:
-Class Network là class neural net:
+Class Network là class neural net: đã cài đặt bằng thư viện numpy xong.
 	gồm các thuộc tính:
 		+ L: int --> số tầng
 		+ input_layer: InputLayer --> tầng input kiểu InputLayer.
@@ -101,6 +101,11 @@ Class Network là class neural net:
 Class Layer: abstract class:
 	InputLayer, OUputLayer, HiddenLayer inherit Layer
 Class Connection: chứa W và b
+PHẦN CONVOLUTIONAL NERUAL NET:
+	Tìm hiểu được khái niệm:
+		convolutional là gì:
+		slibling windows:
+		Hạn chế: tuy nhiên chưa biết cách cài đặt một mô hình đơn giản.
 PHẦN DEEP LEARNING:
 	1. Học tensorflow:
 		a. 
