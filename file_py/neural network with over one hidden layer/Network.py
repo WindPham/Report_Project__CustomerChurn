@@ -7,18 +7,17 @@ from Connection import Connection;
 
 class Network(object):
     """description of class"""
-    def __init__(self, learningrate, num_data_points, n_features , num_of_hidden_layers, array_num_of_unit_each_layer, Ws, bs):
+    def __init__(self, learningrate, n_features , num_of_hidden_layers, Ws, bs):
         self.learning_rate = learningrate;
         self.n_class = Ws[-1].shape[1];
-        self.N = num_data_points;
         self.features = n_features;
         self.L = num_of_hidden_layers + 1;
-        self.input_layer = InputLayer(self.features, self.N);
-        self.output_layer = OutputLayer(self.N, self.n_class);
+        self.input_layer = InputLayer();
+        self.output_layer = OutputLayer();
         self.hidden_layers = np.array([]);
         self.connections = np.array([]);
         for i in range(num_of_hidden_layers):
-            self.hidden_layers = np.append(self.hidden_layers, HiddenLayer(array_num_of_unit_each_layer[i]));
+            self.hidden_layers = np.append(self.hidden_layers, HiddenLayer());
         for i in range(1, self.L+1):
             self.connections = np.append(self.connections, Connection());
             self.connections[i-1].set(Ws[i-1], bs[i-1], i-1, i);
@@ -52,32 +51,29 @@ class Network(object):
     
     def train(self, X, Y): 
         self.feed_forward(X);
-        # calculate E(L) = 1/N * (Yhat - Y);
-        E_L = 1/self.N * (self.output_layer.A - Y);
-        pdJ_pdW_L = np.dot(self.hidden_layers[self.L-2].A, E_L.T); # pd(J)/pd(W_L);
-        pdJ_pdb_L = np.sum(E_L, axis = 1, keepdims=True); # pd(J).pd(b_L);
 
-        # Calculate E(L-1) = W(L-1) dot E(L).
-        E_L_1 = np.dot(self.connections[self.L-1].W, E_L);
-        pdJ_pdW_L_1 = np.dot(self.hidden_layers[self.L - 3].A, E_L_1.T);# pd(J)/pd(W_L_1);
-        pdJ_pdb_L_1 = np.sum(E_L_1, axis = 1, keepdims=True);# pd(J)/pd(b_L_1);
+        E_L = [];
+        dJ_dW = [];
+        dJ_db = [];
+        # calculate E(L) = 1/N * (Yhat - Y);
+        E_L.append(1.0/X.shape[0] * (self.output_layer.A - Y));
+        dJ_dW.append(np.dot(self.hidden_layers[self.L-2].A, E_L[-1].T)); # pd(J)/pd(W_L);
+        dJ_db.append(np.sum(E_L[-1], axis = 1, keepdims=True)); # pd(J).pd(b_L);
+
+        for i in range(self.L-1, 1, -1):
+            # Calculate E(L-1) = W(L-1) dot E(L).
+            E_L.append(np.dot(self.connections[i].W, E_L[-1]));
+            dJ_dW.append(np.dot(self.hidden_layers[i-2].A, E_L[-1].T));# pd(J)/pd(W_L_1);
+            dJ_db.append(np.sum(E_L[-1], axis = 1, keepdims=True));# pd(J)/pd(b_L_1);
         
         # Calculate E(L-2) = W(L-2) dot E(L-1).
-        E_L_2 = np.dot(self.connections[self.L-2].W, E_L_1);
-        pdJ_pdW_L_2 = np.dot(self.input_layer.A, E_L_2.T);# pd(J)/pd(W_L_2);
-        pdJ_pdb_L_2 = np.sum(E_L_2, axis = 1, keepdims=True);# pd(J)/pd(b_L_2);
-        #print(pdJ_pdW_L);
-        #print(pdJ_pdb_L);
-        #print(pdJ_pdW_L_1);
-        #print(pdJ_pdb_L_1);
-        #print(pdJ_pdW_L_2);
-        #print(pdJ_pdb_L_2);
-        #
+        E_L.append(np.dot(self.connections[self.L-2].W, E_L[-1]));
+        dJ_dW.append(np.dot(self.input_layer.A, E_L[-1].T));# pd(J)/pd(W_L_2);
+        dJ_db.append(np.sum(E_L[-1], axis = 1, keepdims=True));# pd(J)/pd(b_L_2);
         # w += -eta * pd(j)/pd(w)
         # b += -eta + pd(j)/pd(w)
-        self.connections[self.L - 1].update(self.learning_rate, pdJ_pdW_L  , pdJ_pdb_L  );
-        self.connections[self.L - 2].update(self.learning_rate, pdJ_pdW_L_1, pdJ_pdb_L_1);
-        self.connections[self.L - 3].update(self.learning_rate, pdJ_pdW_L_2, pdJ_pdb_L_2);
+        for i in range(self.L):
+            self.connections[i].update(self.learning_rate, dJ_dW[-i-1]  , dJ_db[-i-1]);
 
         return;
 
@@ -89,6 +85,18 @@ class Network(object):
 
         return;
 
-    
+    def train_loop(self, X, Y, n_loop_time, mode = 'b', mini_batch = 10):
+        if mode == 's':
+            for i in range(n_loop_time):
+                indx = np.random.randint(0, X.shape[0]);
+                self.train(X[indx], Y[indx]);
+        elif mode == 'b':
+            for i in range(n_loop_time):
+                self.train(X, Y);
+        else:
+            for i in range(n_loop_time):
+                indx = np.random.randint(0, X.shape[0], size = (mini_batch, ));
+                self.train(X[indx], Y[indx]);
 
 
+        return;

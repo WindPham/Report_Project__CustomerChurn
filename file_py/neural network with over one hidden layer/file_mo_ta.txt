@@ -1,0 +1,53 @@
+Thầy ơi, em code tay bằng thư viện numpy, một mô hình neural net có 2 tầng ẩn.
+Đây là code của em (em code bằng visual studio).
+Em xin mô tả code em lập trình:
+	1. Class Layer là class trừu tượng.
+		1.1. Class InputLayer: kế thừa Layer: 
+			Thuộc tính: self.A : numpy.narray
+			Phương thức: self.set_A(X);
+		1.2. Class HiddenLayer: kế thừa Layer:
+			Thuộc tính: 
+				self.Z : numpy.narray 
+				self.A : numpy.narray
+			Phương thức:
+				activation_function(s: matrix): ReLU
+				Z_to_A(): A = ReLU(Z);
+				set_Z(Z: numpy.narray): self.Z = Z;
+		1.3. Class OutputLayer: kế thừa Layer:
+			Thuộc tính:
+				self.Z : numpy.narray
+				self.A : numpy.narray
+			Phương thức:
+				activation_function(s: matrix): Hàm Softmax
+				set_Z(Z): Tương tự như HiddenLayer.
+				Z_to_A(): Tương tự như HiddenLayer.
+	2. Class Connection:
+		Thuộc tính:
+			W: ma trận trọng số: numpy.narray
+			b: ban đầu là một số nhưng trong quá trình train thì được biến đổi thành ma trận
+			trade: lưu lại trị số tầng trước và tầng sau.
+		Phương thức:
+			set(W, b, l1, l2):
+				W: ma trận trọng số
+				b: bias
+				l1, l2: Lần lượt là trị số tầng trước và tầng sau.
+			Z(A_of_first_layer: ma trận A l-1 ở tầng trước : tính Z thông qua công thức wT . a + b
+			update(eta, pdJ_pdW, pdJ_pdb):
+				eta: hệ số học
+				pdJ_pdW: đạo hàm một phần của J theo W
+				pdJ_pdb: đạo hàm một phần của J theo b
+	3. Class Network: class mô tả một mạng neural:
+		Thuộc tính:
+			self.learning_rate: hệ số học
+			self.n_class: số lớp cần phân
+			self.N = số điểm dữ liệu đổ vào mạng
+			self.features = số features ban đầu của data set
+			self.L = số tầng của mạng (bằng số tầng ẩn + 1)
+			self.input_layer = tầng vào
+			self.output_layer = tầng ra
+			self.hidden_layers = mảng những tầng ẩn
+			self.connections = mảng những Connection
+		Phương thức:
+			feedforward: "cho ăn tiến" --> đổ dữ liệu vào để lan truyền tiến.
+			train: hàm huấn luyện dùng backpro
+			predict: hàm dự đoán
