@@ -106,6 +106,11 @@ PHẦN CONVOLUTIONAL NERUAL NET:
 		convolutional là gì:
 		slibling windows:
 		Hạn chế: tuy nhiên chưa biết cách cài đặt một mô hình đơn giản.
+	Bắt đầu tìm hiểu chi tiết mô hình thông qua khóa học CS231 của standford.
+		Bài 1: giới thiệu tổng quan:
+		Bài 2: nói về phân lớp trên ảnh biểu diễn thuật toán KNN trong phân lớp ảnh, SVM trong phân lớp ảnh.
+		Bài 3: nói về hàm mất mác và regularization tối ưu hàm mất mác để fit được tập kiểm tra.
+		
 PHẦN DEEP LEARNING:
 	1. Học tensorflow:
 		a. 
