@@ -110,7 +110,11 @@ PHẦN CONVOLUTIONAL NERUAL NET:
 		Bài 1: giới thiệu tổng quan:
 		Bài 2: nói về phân lớp trên ảnh biểu diễn thuật toán KNN trong phân lớp ảnh, SVM trong phân lớp ảnh.
 		Bài 3: nói về hàm mất mác và regularization tối ưu hàm mất mác để fit được tập kiểm tra.
-		
+	Mô hình CNNs:
+		Hiểu được cách hình thành từ ANNs sang CNNs. Code được nhưng em chưa code kịp.
+		Hiểu được tầng chập, công thức tính toán từng phần tử trong ma trận trọng số: Đã code được phần conv và pooling đơn giản thông qua numpy (Nhưng anh cho phép em tổng hợp lại code sau khi em hoàn thành hơn 50%)
+		Hiểu được quy trình tính toán.
+		Code được phần đổi từ 3 kênh màu sang xám, tìm phần từ đại diện trong một nhóm điểm ảnh.
 PHẦN DEEP LEARNING:
 	1. Học tensorflow:
 		a. 
