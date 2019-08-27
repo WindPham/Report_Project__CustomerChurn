@@ -99,13 +99,13 @@ class PLOT(object):
     def plt_hist_line(self, col_name, Bins = 20, Edgecolor = 'black', two_axis = False):
         if two_axis == False:
             self.__df[col_name].plot(kind = 'hist', bins = Bins, normed = True, edgecolor = Edgecolor);
-            self.__df[col_name].plot(kind = 'kde')
+            self.__df[col_name].plot(kind = 'kde', c='r')
             plt.show();
         else:
             fig,ax = plt.subplots();
             self.__df[col_name].plot(kind = 'hist', bins = Bins, normed = True, edgecolor = Edgecolor);
             ax_other = ax.twinx();
-            self.__df[col_name].plot(kind = 'kde')
+            self.__df[col_name].plot(kind = 'kde', c = 'r')
             plt.show();
         return;
     #--13------------------------------------------------------------------------------------------

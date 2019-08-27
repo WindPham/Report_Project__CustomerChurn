@@ -9,7 +9,7 @@ if __name__ == "__main__":
     #df.plt_points_two_column("MonthlyCharges", "TotalCharges");
     #df.plt_area_two_column("tenure", "TechSupport");
     #df.plt_area_two_column(col_1_name = "tenure", col_2_name = "gender");
-    #df.plt_hist('tenure', 3);
+    #df.plt_hist('tenure', 70);
     #df.plt_bar('tenure','gender')
     #df.plt_pie('TechSupport', 'tenure');
     #df.plt_pie_two_cols('TechSupport', 'tenure');

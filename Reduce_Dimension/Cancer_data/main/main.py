@@ -167,7 +167,7 @@ class REDUCING(object):
         X = preprocessing.scale(X);
         pca_model.fit(X);
         X = pca_model.transform(X);
-        return pca_model, X, np.array(Y);  
+        return pca_model, X, np.array(Y);
     #=====================================================================================================================
     def independent_component_analysis(self, number_of_features_need_to_delete, label):
         Y = self.__df[label];
